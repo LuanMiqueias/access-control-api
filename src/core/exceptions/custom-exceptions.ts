@@ -20,3 +20,15 @@ export class ResourceNotFound extends HttpException {
     );
   }
 }
+
+export class WrongCredentialsError extends HttpException {
+  constructor() {
+    super(
+      {
+        statusCode: HttpStatus.UNAUTHORIZED,
+        message: `Credentials are not valid.`,
+      },
+      HttpStatus.UNAUTHORIZED,
+    );
+  }
+}

@@ -3,7 +3,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { User } from '../../enterprise/user.entity';
 import { UserAlreadyExists } from 'src/core/exceptions/custom-exceptions';
 import * as bcrypt from 'bcryptjs';
-import { CreateUserUseCase } from './create-user.use-case';
+import { CreateUserUseCase } from './create-user';
 import { InMemoryUserRepository } from 'src/infra/database/in-memory/repositories/user-in-memory.repository';
 
 describe('CreateUserUseCase', () => {
@@ -23,7 +23,7 @@ describe('CreateUserUseCase', () => {
 
     expect(user).toBeDefined();
     expect(user.email).toBe(email);
-    expect(user.password).not.toBe(password); // Deve estar criptografado
+    expect(user.password).not.toBe(password); // Should be cryptograph
   });
 
   it('Should be show error when create a new user with same email', async () => {
