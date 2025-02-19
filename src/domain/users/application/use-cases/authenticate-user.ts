@@ -40,7 +40,10 @@ export class AuthenticateUserUseCase {
     if (!isPasswordValid) {
       throw new WrongCredentialsError();
     }
-    const payload = { sub: user?.id, roles: user?.roles };
+    const payload = {
+      sub: user?.id,
+      roles: user?.roles,
+    };
     const accessToken = await this.encrypter.encrypt(payload);
 
     return {

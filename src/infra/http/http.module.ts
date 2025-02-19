@@ -9,9 +9,11 @@ import { CryptographyModule } from '../cryptography/cryptography.module';
 import { Encrypter } from 'src/domain/users/application/cryptography/encrypter';
 import { HashComparer } from 'src/domain/users/application/cryptography/hash-comparer';
 import { HashGenerator } from 'src/domain/users/application/cryptography/hash-generator';
+import { PoliciesGuard } from 'src/core/authorization/policies.guard';
+import { CaslModule } from 'src/core/authorization/casl.module';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, UserModule],
+  imports: [DatabaseModule, CryptographyModule, CaslModule, UserModule],
   controllers: [UserController, AuthenticateController],
   providers: [CreateUserUseCase, AuthenticateUserUseCase],
 })
