@@ -1,33 +1,72 @@
-# AccessControl API
+# AccessControl
 
-A **AccessControl API** é um sistema de gerenciamento de usuários e permissões, utilizando práticas de **Domain-Driven Design (DDD)** para organizar o código e garantir que a lógica de negócios seja bem estruturada e facilmente escalável.
+## 🚀 Sobre o Projeto
 
-A API é construída usando **NestJS**, **TypeORM** e **PostgreSQL**, e tem como objetivo fornecer um sistema robusto para gerenciar usuários, papéis (roles) e permissões.
+O **AccessControl** é uma API para gerenciamento de usuários e permissões, seguindo a estrutura DDD (Domain-Driven Design). Ele foi desenvolvido utilizando **NestJS**, **PostgreSQL**, e integração com **Datadog** para logging.
 
-## Features
+## 🛠️ Tecnologias Utilizadas
 
-- Cadastro de usuários com informações de login.
-- Atribuição de papéis (roles) aos usuários.
-- Gerenciamento de permissões com base nos papéis.
-- Uso de UUIDs para identificação dos recursos.
-- Estrutura organizada em camadas com DDD.
+- **NestJS** (Framework backend)
+- **TypeScript**
+- **PostgreSQL** + **Prisma ORM**
+- **Docker** (para ambiente de desenvolvimento)
+- **Datadog** (monitoramento e logging)
+- **Winston** (logging)
+- **Node.js**
 
-## Tecnologias Utilizadas
+## 📂 Estrutura do Projeto
 
-- **NestJS**: Framework de Node.js para construir aplicações escaláveis.
-- **TypeORM**: ORM para facilitar a interação com o banco de dados PostgreSQL.
-- **PostgreSQL**: Banco de dados relacional.
-- **UUID**: Identificadores únicos para os registros.
-- **TypeScript**: Superset de JavaScript que adiciona tipagem estática.
-- **Docker** (opcional): Para facilitar o desenvolvimento e a execução da aplicação.
+A estrutura do projeto segue a abordagem DDD e está organizada da seguinte forma:
 
-## Estrutura do Projeto
+```
+/src
+  ├── core/         # Lógica compartilhada
+  ├── domain/       # Regras de negócio
+  │   ├── application/ # Casos de uso e repositórios
+  │   ├── enterprise/  # Entidades e objetos de valor
+  ├── infra/        # Infraestrutura (Banco de dados, HTTP, etc.)
+  ├── main.ts       # Bootstrap da aplicacão
+```
 
-A aplicação segue a estrutura de camadas (DDD) com três principais diretórios dentro de `src/`:
+## 🏗️ Configuração e Execução
 
-- **core**: Contém a lógica de aplicação comum, como interfaces, DTOs e exceções.
-- **domain**: Contém as entidades e lógica de negócios da aplicação, dividida em subdomínios (ex: `users`, `roles`).
-  - **application**: Casos de uso e repositórios.
-  - **enterprise**: Entidades e objetos de valor.
-- **infra**: Contém a implementação de infraestrutura (ex: conexão com banco de dados, configurações externas).
+### 1️⃣ Configurar Variáveis de Ambiente
 
+Crie um arquivo **`.env`** na raiz do projeto e defina as variáveis necessárias:
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/access_control
+DATADOG_API_KEY=seu_api_key_aqui
+LOG_PATH=/var/log/datadog/custom_logs/log.log
+```
+
+### 2️⃣ Subir o Ambiente com Docker
+
+```sh
+docker-compose up -d
+```
+
+### 3️⃣ Rodar as Migrações do Prisma
+
+```sh
+npx prisma migrate dev
+```
+
+### 4️⃣ Executar a API
+
+```sh
+npm run start
+```
+
+## 📊 Logging com Datadog
+
+A API utiliza **Winston** integrado ao **Datadog** para captura de logs. O `AppLogger` está configurado para:
+
+- Escrever logs no arquivo definido em **LOG\_PATH**
+- Exibir logs coloridos no console
+- (Opcional) Enviar logs diretamente para a API do Datadog
+
+### 📌 Como visualizar os logs no Datadog
+
+1. Acesse o [Datadog Logs](https://app.datadoghq.com/logs)
+2. Configure os filtros para visualizar os logs do **access-control-api**
