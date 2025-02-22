@@ -18,12 +18,6 @@ import { User } from 'src/domain/users/enterprise/user.entity';
         const dbPass = configService.get<string>('DB_PASS');
         const dbName = configService.get<string>('DB_NAME');
 
-        console.log('DB_HOST:', dbHost);
-        console.log('DB_PORT:', dbPort);
-        console.log('DB_USER:', dbUser);
-        console.log('DB_PASS:', dbPass);
-        console.log('DB_NAME:', dbName);
-
         return {
           type: 'postgres',
           host: dbHost ?? 'localhost',

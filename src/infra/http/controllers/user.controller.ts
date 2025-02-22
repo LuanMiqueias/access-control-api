@@ -18,6 +18,7 @@ import { CheckPolicies } from 'src/core/authorization/policy.decorator';
 import { JwtAuthGuard } from 'src/infra/auth/jwt-auth.guard';
 import { UserPayload } from 'src/infra/auth/jwt.strategy';
 import { CurrentUser } from 'src/infra/auth/current-user-decorator';
+import { AppLogger } from 'src/core/logging/logger.service';
 
 const CreateUserBodySchema = z.object({
   email: z.string().email(),

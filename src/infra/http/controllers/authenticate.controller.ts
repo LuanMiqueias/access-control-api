@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { Public } from '@/infra/auth/public';
 import { WrongCredentialsError } from 'src/core/exceptions/custom-exceptions';
 import { AuthenticateUserUseCase } from 'src/domain/users/application/use-cases/authenticate-user';
+import { AppLogger } from 'src/core/logging/logger.service';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -22,7 +23,10 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 @Controller('/auth')
 @Public()
 export class AuthenticateController {
-  constructor(private authenticateUser: AuthenticateUserUseCase) {}
+  constructor(
+    private authenticateUser: AuthenticateUserUseCase,
+    private logger: AppLogger,
+  ) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
@@ -39,7 +43,8 @@ export class AuthenticateController {
         accessToken: accessToken,
       };
     } catch (err) {
-      console.log(err);
+      this.logger.error(err);
+
       switch (err.constructor) {
         case WrongCredentialsError:
           throw new UnauthorizedException(err.message);

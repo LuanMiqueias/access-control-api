@@ -6,14 +6,17 @@ import { UserModule } from 'src/domain/users/user.module';
 import { AuthenticateUserUseCase } from 'src/domain/users/application/use-cases/authenticate-user';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { CryptographyModule } from '../cryptography/cryptography.module';
-import { Encrypter } from 'src/domain/users/application/cryptography/encrypter';
-import { HashComparer } from 'src/domain/users/application/cryptography/hash-comparer';
-import { HashGenerator } from 'src/domain/users/application/cryptography/hash-generator';
-import { PoliciesGuard } from 'src/core/authorization/policies.guard';
 import { CaslModule } from 'src/core/authorization/casl.module';
+import { LoggerModule } from 'src/core/logging/logger.module';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, CaslModule, UserModule],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    CaslModule,
+    UserModule,
+    LoggerModule,
+  ],
   controllers: [UserController, AuthenticateController],
   providers: [CreateUserUseCase, AuthenticateUserUseCase],
 })

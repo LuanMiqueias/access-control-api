@@ -15,13 +15,10 @@ import { EnvModule } from '../env/env.module';
       inject: [EnvService],
       global: true,
       useFactory(env: EnvService) {
-        const privateKey = env.get('JWT_PRIVATE_KEY');
-        const publicKey = env.get('JWT_PUBLIC_KEY');
+        const secretJWT = env.get('JWT_SECRET_KEY');
 
         return {
-          signOptions: { algorithm: 'RS256' },
-          privateKey: Buffer.from(privateKey, 'base64'),
-          publicKey: Buffer.from(publicKey, 'base64'),
+          secret: secretJWT,
         };
       },
     }),
