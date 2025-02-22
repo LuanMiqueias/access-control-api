@@ -5,6 +5,7 @@ export const envSchema = z.object({
   JWT_SECRET_KEY: z.string(),
   DATADOG_API_KEY: z.string(),
   DATADOG_HOSTNAME: z.string(),
+  LOG_PATH: z.string(),
   PORT: z.coerce.number().optional().default(3333),
 });
 

@@ -8,7 +8,6 @@ export class AppLogger implements LoggerService {
   private logger: winston.Logger;
 
   constructor(config: EnvService) {
-    console.log('config', config);
     this.logger = winston.createLogger({
       level: 'info',
       exitOnError: false,
@@ -16,7 +15,7 @@ export class AppLogger implements LoggerService {
 
       transports: [
         new winston.transports.File({
-          filename: `/var/log/datadog/custom_logs/log.log`,
+          filename: config.get('LOG_PATH'),
         }),
         new winston.transports.Console({
           format: winston.format.combine(
